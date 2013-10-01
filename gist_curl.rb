@@ -1,6 +1,3 @@
-require 'sinatra'
-require 'sinatra/reloader'
-#require_relative 'gist_curl'
 require 'httparty'
 require 'pry'
 
@@ -17,9 +14,4 @@ def get_gist_id_hash
     end
   end
   big_array
-end
-
-get '/' do
-  @all_gists = get_gist_id_hash
-  erb :index
 end
