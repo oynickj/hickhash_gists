@@ -1,9 +1,13 @@
+require 'rubygems'
+require 'bundler/setup'
+
+
 require 'sinatra'
-require 'sinatra/reloader'
+#require 'sinatra/reloader'
 
 #require_relative 'gist_curl'
 require 'httparty'
-require 'pry'
+#require 'pry'
 
 def reformat_time (gist_time)
   gist_time.slice!(-1)
