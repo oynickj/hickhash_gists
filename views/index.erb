@@ -5,8 +5,7 @@
 
 <h1>KickHash Compiled Gist Posts</h1>
 
-<% @all_gists.each do |gist_id| %>
-<code data-gist-id="<%= gist_id.to_i %>"></code>
+<% @all_gists.each do |gist_info| %>
+  <p><b><%= gist_info[0] %></b></p> 
+  <code data-gist-id="<%= gist_info[1].to_i %>"></code>
 <% end %>
-
-

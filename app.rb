@@ -1,5 +1,6 @@
 require 'sinatra'
 require 'sinatra/reloader'
+
 #require_relative 'gist_curl'
 require 'httparty'
 require 'pry'
@@ -13,22 +14,26 @@ def reformat_time (gist_time)
   gist_time.to_i
 end
 
-def get_gist_id_hash
+def get_gist_info
   cohorts = ['coopermayne','phlco','quackhouse']
-  big_hash = {}
+  big_array = []
+  #compile all gists with updated_at time....
   cohorts.each do |cohort|
     response = HTTParty.get("https://api.github.com/users/#{cohort}/gists")
     response.each do |gist|
       formatted_time = reformat_time( gist["updated_at"] )
-      big_hash[gist["id"]] = formatted_time
+      small_array = []
+      small_array << cohort << gist["id"] << formatted_time
+      big_array << small_array
     end
   end
-  sorted_array = big_hash.sort_by {|id, updated_at| updated_at}
-  sorted_array.map{ |couple| couple.delete_at(1) }.flatten
-  sorted_array.reverse.flatten!
+
+  #sort by time
+  sorted_array = big_array.sort_by {|nested| nested[2]}.reverse!
+  ans = sorted_array.slice(0,5)
 end
 
 get '/' do
-  @all_gists = get_gist_id_hash
+  @all_gists = get_gist_info
   erb :index
 end
